@@ -14,6 +14,7 @@ class CreateRaceLogsTable extends Migration
     public function up()
     {
         Schema::create('race_logs', function (Blueprint $table) {
+
             $table->increments('id');
             $table->integer('driver_shift_id');
             $table->string('patent');
@@ -29,6 +30,7 @@ class CreateRaceLogsTable extends Migration
             $table->string('end_mileage');
             $table->text('observations')->nullable();
             $table->timestamps();
+
         });
     }
 
