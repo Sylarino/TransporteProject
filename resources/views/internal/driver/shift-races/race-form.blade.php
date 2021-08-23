@@ -12,7 +12,7 @@
                     Movil: {{ $driver_shift->mobile->mobile }}-{{ $driver_shift->mobile->patent }}
                 </p>
                 <hr>
-                <form class="" role="form" id="driver-race-form">
+                <form class="" role="form" id="driver-race-form" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col">
@@ -141,6 +141,16 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Subir Imagenes</label>
+                                <input type="file" id="file_image" name="file_image" class="form-control" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">

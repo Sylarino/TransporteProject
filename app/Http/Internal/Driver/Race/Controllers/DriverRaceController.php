@@ -4,6 +4,7 @@ namespace App\Http\Internal\Driver\Race\Controllers;
 
 use App\Domain\Internal\Driver\Driver;
 use App\Domain\Internal\Races\RaceLog;
+use App\Domain\Internal\Races\FileImage;
 use App\Exports\Internal\Admin\AllTransportExport;
 use App\Http\Internal\Driver\Race\Requests\DriverRaceRequest;
 use Carbon\Carbon;
@@ -27,8 +28,10 @@ class DriverRaceController extends Controller
         if ($request->to_id == '' && $request->to_text == '') {
             return response()->json(['errors',['to_id' => 'Debe Seleccionar destino o escribir el destino.']],422);
         }
+
         $driver = Driver::find($id);
         $driver_shift = $driver->hasShiftCreated();
+
         if ($driver_shift) {
             if(RaceLog::create([
                 'driver_shift_id' => $driver_shift->id,
@@ -44,19 +47,28 @@ class DriverRaceController extends Controller
                 'start_mileage' => $request->start_mileage,
                 'end_mileage' => $request->end_mileage,
                 'observations' => $request->observations
-            ])) {
-                return $this->getResponse('success.store');
-            } else{
+            ])) 
+            {
+
+                // Descarga de Imagenes y consiguiente registro
+                $file_path = $request->file('file_image');               
+                $name = $file_path->getClientOriginalName();
+
+                // $file_path->move('evidence_files_transport', $name);
+                
+                // return $this->getResponse('success.store');
+            
+            } else {
                 return $this->getResponse('error.store');
             }
         } else {
             return response()->json(['error' => 'No puede crear carreras fuera del turno.'],401);
         }
+        
     }
 
     public function index()
     {
-
         return view('internal.driver.races.admin');
     }
 
