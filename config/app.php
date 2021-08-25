@@ -2,6 +2,9 @@
 
 return [
 
+    Intervention\Image\ImageServiceProvider::class,
+
+    'Image' => Intervention\Image\Facades\Image::class,
     /*
     |--------------------------------------------------------------------------
     | Application Name

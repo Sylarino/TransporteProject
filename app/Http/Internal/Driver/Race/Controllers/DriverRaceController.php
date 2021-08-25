@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\App\Controllers\Controller;
 use Excel;
+use Image;
+use Illuminate\Support\Str;
 
 
 class DriverRaceController extends Controller
@@ -28,6 +30,14 @@ class DriverRaceController extends Controller
         if ($request->to_id == '' && $request->to_text == '') {
             return response()->json(['errors',['to_id' => 'Debe Seleccionar destino o escribir el destino.']],422);
         }
+
+        // if($request->hasFile('file_image')){
+        //     $archivo = $request->file('file_image');        
+        //     $nombre = $archivo->getClientOriginalName();
+        //     \Storage::disk('local')->put($nombre, \File::get($archivo));                    
+             
+        //     return $this->getResponse('success.store');
+        // }
 
         $driver = Driver::find($id);
         $driver_shift = $driver->hasShiftCreated();
@@ -51,13 +61,29 @@ class DriverRaceController extends Controller
             {
 
                 // Descarga de Imagenes y consiguiente registro
-                $file_path = $request->file('file_image');               
-                $name = $file_path->getClientOriginalName();
+                // $entrada=$request->all();
 
-                // $file_path->move('evidence_files_transport', $name);
+                // if ($request->hashFile('file_image'))
+                // $file_path->move('evidence_files_transport', $name); 
                 
+                // $ruta = public_path().'/img/';
+
+                // $img_og = $request->file('file_image');
+
+                // $imagen = Image::make($img_og);
+
+                // $temp_name = $img_og->getClientOriginalName();
+
+                // $imagen->save($ruta . $temp_name, 100);
+
                 // return $this->getResponse('success.store');
-            
+
+                $archivo = $request->file('file_image');   
+                $nombre = $archivo->getClientOriginalName();
+                $ruta = public_path("img/");
+                $archivo->move($ruta, $nombre); 
+                return $this->getResponse('success.store');
+
             } else {
                 return $this->getResponse('error.store');
             }

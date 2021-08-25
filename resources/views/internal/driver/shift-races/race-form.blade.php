@@ -12,7 +12,7 @@
                     Movil: {{ $driver_shift->mobile->mobile }}-{{ $driver_shift->mobile->patent }}
                 </p>
                 <hr>
-                <form class="" role="form" id="driver-race-form" enctype="multipart/form-data">
+                <form class="" role="form" id="driver-race-form" enctype="multipart/form-data" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col">
